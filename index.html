@@ -99,10 +99,21 @@
       opacity: 0.8;
     }
 
+    .back {
+  background: #888;
+  color: white;
+  margin-top: 16px;
+}
+
+.back:hover {
+  background: #666;
+}
+
     @keyframes floatUp {
       0% { transform: translateY(0) scale(1); opacity: 1; }
       100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
     }
+    
   </style>
 </head>
 <body>
@@ -118,51 +129,69 @@
 
   <div class="hearts" id="hearts"></div>
 
-  <script>
-    const card = document.getElementById("card");
-    const hearts = document.getElementById("hearts");
+ <script>
+  const card = document.getElementById("card");
+  const hearts = document.getElementById("hearts");
 
-    function clickedNo() {
-      document.body.classList.add("sad");
-      card.innerHTML = `
-        <h1>I guess you hate me... 😔</h1>
-        <p>I’ll just go listen to sad music now...</p>
-      `;
-    }
+  function renderStart() {
+    document.body.classList.remove("sad");
+    card.innerHTML = `
+      <h1>Cher, will you be my Valentine? 💘</h1>
+      <p>This is a very important decision 🥺</p>
+      <div class="buttons">
+        <button class="yes" onclick="firstYes()">Yes 💖</button>
+        <button class="no" onclick="clickedNo()">No 😤</button>
+      </div>
+    `;
+  }
 
-    function firstYes() {
-      card.innerHTML = `
-        <h1>Are you sure? 👀</h1>
-        <p>Like… absolutely 100% sure?</p>
-        <div class="buttons">
-          <button class="yes" onclick="finalYes()">Yes. I'm sure. 💕</button>
-        </div>
-      `;
-    }
+  function clickedNo() {
+    document.body.classList.add("sad");
+    card.innerHTML = `
+      <h1>I guess you hate me... 😔</h1>
+      <p>I’ll just go listen to sad music now...</p>
+      <div class="buttons">
+        <button class="back" onclick="renderStart()">Wait… go back 😢</button>
+      </div>
+    `;
+  }
 
-    function finalYes() {
-      card.innerHTML = `
-        <h1>YAY CHER!!! 💕🥰</h1>
-        <p>
-          You just made me the happiest person alive 💖<br>
-          Happy Valentine’s Day 💘
-        </p>
-      `;
-      launchHearts();
-    }
+  function firstYes() {
+    card.innerHTML = `
+      <h1>Are you sure? 👀</h1>
+      <p>Like… absolutely 100% sure?</p>
+      <div class="buttons">
+        <button class="yes" onclick="finalYes()">Yes. I'm sure. 💕</button>
+      </div>
+    `;
+  }
 
-    function launchHearts() {
-      setInterval(() => {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.textContent = "💖";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = 3 + Math.random() * 2 + "s";
-        hearts.appendChild(heart);
-        setTimeout(() => heart.remove(), 5000);
-      }, 200);
-    }
-  </script>
+  function finalYes() {
+    card.innerHTML = `
+      <h1>YAY CHER!!! 💕🥰</h1>
+      <p>
+        You just made me the happiest person alive 💖<br>
+        Happy Valentine’s Day 💘
+      </p>
+    `;
+    launchHearts();
+  }
+
+  function launchHearts() {
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 3 + Math.random() * 2 + "s";
+      hearts.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }, 200);
+  }
+
+  // Initial render
+  renderStart();
+</script>
 
 </body>
 </html>
