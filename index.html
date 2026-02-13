@@ -5,7 +5,7 @@
   <title>Cher, Will You Be My Valentine? 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Google Font (same on mobile + desktop) -->
+  <!-- Google Font (consistent on mobile + desktop) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -20,6 +20,7 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      transition: background 0.3s ease;
     }
 
     .card {
@@ -80,6 +81,16 @@
       transform: scale(1.05);
     }
 
+    .back {
+      background: #888;
+      color: white;
+      margin-top: 16px;
+    }
+
+    .back:hover {
+      background: #666;
+    }
+
     .sad {
       background: linear-gradient(135deg, #c9c9c9, #9e9e9e);
     }
@@ -99,99 +110,80 @@
       opacity: 0.8;
     }
 
-    .back {
-  background: #888;
-  color: white;
-  margin-top: 16px;
-}
-
-.back:hover {
-  background: #666;
-}
-
     @keyframes floatUp {
       0% { transform: translateY(0) scale(1); opacity: 1; }
       100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
     }
-    
   </style>
 </head>
 <body>
 
-  <div class="card" id="card">
-    <h1>Cher, will you be my Valentine? 💘</h1>
-    <p>This is a very important decision 🥺</p>
-    <div class="buttons">
-      <button class="yes" onclick="firstYes()">Yes 💖</button>
-      <button class="no" onclick="clickedNo()">No 😤</button>
-    </div>
-  </div>
-
+  <div class="card" id="card"></div>
   <div class="hearts" id="hearts"></div>
 
- <script>
-  const card = document.getElementById("card");
-  const hearts = document.getElementById("hearts");
+  <script>
+    const card = document.getElementById("card");
+    const hearts = document.getElementById("hearts");
 
-  function renderStart() {
-    document.body.classList.remove("sad");
-    card.innerHTML = `
-      <h1>Cher, will you be my Valentine? 💘</h1>
-      <p>This is a very important decision 🥺</p>
-      <div class="buttons">
-        <button class="yes" onclick="firstYes()">Yes 💖</button>
-        <button class="no" onclick="clickedNo()">No 😤</button>
-      </div>
-    `;
-  }
+    function renderStart() {
+      document.body.classList.remove("sad");
+      card.innerHTML = `
+        <h1>Cher, will you be my Valentine? 💘</h1>
+        <p>This is a very important decision 🥺</p>
+        <div class="buttons">
+          <button class="yes" onclick="firstYes()">Yes 💖</button>
+          <button class="no" onclick="clickedNo()">No 😤</button>
+        </div>
+      `;
+    }
 
-  function clickedNo() {
-    document.body.classList.add("sad");
-    card.innerHTML = `
-      <h1>I guess you hate me... 😔</h1>
-      <p>I’ll just go listen to sad music now...</p>
-      <div class="buttons">
-        <button class="back" onclick="renderStart()">Wait… go back 😢</button>
-      </div>
-    `;
-  }
+    function clickedNo() {
+      document.body.classList.add("sad");
+      card.innerHTML = `
+        <h1>I guess you hate me... 😔</h1>
+        <p>I’ll just go listen to sad music now...</p>
+        <div class="buttons">
+          <button class="back" onclick="renderStart()">Wait… go back 😢</button>
+        </div>
+      `;
+    }
 
-  function firstYes() {
-    card.innerHTML = `
-      <h1>Are you sure? 👀</h1>
-      <p>Like… absolutely 100% sure?</p>
-      <div class="buttons">
-        <button class="yes" onclick="finalYes()">Yes. I'm sure. 💕</button>
-      </div>
-    `;
-  }
+    function firstYes() {
+      card.innerHTML = `
+        <h1>Are you sure? 👀</h1>
+        <p>Like… absolutely 100% sure?</p>
+        <div class="buttons">
+          <button class="yes" onclick="finalYes()">Yes. I'm sure. 💕</button>
+        </div>
+      `;
+    }
 
-  function finalYes() {
-    card.innerHTML = `
-      <h1>YAY CHER!!! 💕🥰</h1>
-      <p>
-        You just made me the happiest person alive 💖<br>
-        Happy Valentine’s Day 💘
-      </p>
-    `;
-    launchHearts();
-  }
+    function finalYes() {
+      card.innerHTML = `
+        <h1>YAY CHER!!! 💕🥰</h1>
+        <p>
+          You just made me the happiest person alive 💖<br>
+          Happy Valentine’s Day 💘
+        </p>
+      `;
+      launchHearts();
+    }
 
-  function launchHearts() {
-    setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.textContent = "💖";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 3 + Math.random() * 2 + "s";
-      hearts.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
-    }, 200);
-  }
+    function launchHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = 3 + Math.random() * 2 + "s";
+        hearts.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
+      }, 200);
+    }
 
-  // Initial render
-  renderStart();
-</script>
+    // Initial render
+    renderStart();
+  </script>
 
 </body>
 </html>
