@@ -2,17 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Erin, Will You Be My Valentine? 💖</title>
+  <title>Cher, Will You Be My Valentine? 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Google Font (same on mobile + desktop) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
       height: 100vh;
-      font-family: "Comic Sans MS", "Poppins", cursive;
+      font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #ffdde1, #ee9ca7);
       display: flex;
       align-items: center;
@@ -26,15 +28,16 @@
       border-radius: 24px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.15);
       text-align: center;
-      max-width: 340px;
+      max-width: 360px;
       width: 90%;
-      position: relative;
+      transition: 0.3s ease;
     }
 
     h1 {
-      font-size: 1.8rem;
+      font-size: 1.9rem;
       color: #ff4d6d;
       margin-bottom: 1rem;
+      font-weight: 700;
     }
 
     p {
@@ -44,34 +47,41 @@
     }
 
     .buttons {
-      position: relative;
-      height: 120px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
     button {
       font-size: 1rem;
-      padding: 12px 22px;
+      padding: 12px 24px;
       border: none;
       border-radius: 999px;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: 0.2s ease;
     }
 
-    #yesBtn {
+    .yes {
       background: #ff4d6d;
       color: white;
     }
 
-    #yesBtn:hover {
+    .yes:hover {
       transform: scale(1.1);
     }
 
-    #noBtn {
+    .no {
       background: #ddd;
       color: #333;
-      position: absolute;
-      left: 180px;
-      top: 0;
+    }
+
+    .no:hover {
+      transform: scale(1.05);
+    }
+
+    .sad {
+      background: linear-gradient(135deg, #c9c9c9, #9e9e9e);
     }
 
     .hearts {
@@ -90,87 +100,69 @@
     }
 
     @keyframes floatUp {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-110vh) scale(1.5);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h1>Erin, will you be my Valentine? 💘</h1>
-    <p>I promise unlimited love, hugs, and snacks 🥺🍫</p>
-
+  <div class="card" id="card">
+    <h1>Cher, will you be my Valentine? 💘</h1>
+    <p>This is a very important decision 🥺</p>
     <div class="buttons">
-      <button id="yesBtn">Yes 💖</button>
-      <button id="noBtn">No 😤</button>
+      <button class="yes" onclick="firstYes()">Yes 💖</button>
+      <button class="no" onclick="clickedNo()">No 😤</button>
     </div>
   </div>
 
   <div class="hearts" id="hearts"></div>
 
- <script>
-  const noBtn = document.getElementById("noBtn");
-  const yesBtn = document.getElementById("yesBtn");
-  const hearts = document.getElementById("hearts");
-  const buttonsArea = document.querySelector(".buttons");
+  <script>
+    const card = document.getElementById("card");
+    const hearts = document.getElementById("hearts");
 
-  buttonsArea.addEventListener("mousemove", (e) => {
-    const rect = buttonsArea.getBoundingClientRect();
-    const btnRect = noBtn.getBoundingClientRect();
-
-    const cursorX = e.clientX;
-    const cursorY = e.clientY;
-
-    const btnCenterX = btnRect.left + btnRect.width / 2;
-    const btnCenterY = btnRect.top + btnRect.height / 2;
-
-    const distance = Math.hypot(cursorX - btnCenterX, cursorY - btnCenterY);
-
-    // If cursor gets close, RUN 😤
-    if (distance < 80) {
-      const maxX = rect.width - btnRect.width;
-      const maxY = rect.height - btnRect.height;
-
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
-
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
+    function clickedNo() {
+      document.body.classList.add("sad");
+      card.innerHTML = `
+        <h1>I guess you hate me... 😔</h1>
+        <p>I’ll just go listen to sad music now...</p>
+      `;
     }
-  });
 
-  yesBtn.addEventListener("click", () => {
-    document.querySelector(".card").innerHTML = `
-      <h1>YAY ERIN!!! 💕🥰</h1>
-      <p>
-        You just made me the happiest person ever 💖<br />
-        Happy Valentine’s Day 💘
-      </p>
-    `;
-    launchHearts();
-  });
+    function firstYes() {
+      card.innerHTML = `
+        <h1>Are you sure? 👀</h1>
+        <p>Like… absolutely 100% sure?</p>
+        <div class="buttons">
+          <button class="yes" onclick="finalYes()">Yes. I'm sure. 💕</button>
+        </div>
+      `;
+    }
 
-  function launchHearts() {
-    setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.textContent = "💖";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 3 + Math.random() * 2 + "s";
-      hearts.appendChild(heart);
+    function finalYes() {
+      card.innerHTML = `
+        <h1>YAY CHER!!! 💕🥰</h1>
+        <p>
+          You just made me the happiest person alive 💖<br>
+          Happy Valentine’s Day 💘
+        </p>
+      `;
+      launchHearts();
+    }
 
-      setTimeout(() => heart.remove(), 5000);
-    }, 200);
-  }
-</script>
-
+    function launchHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = 3 + Math.random() * 2 + "s";
+        hearts.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
+      }, 200);
+    }
+  </script>
 
 </body>
 </html>
