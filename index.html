@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Cher, Will You Be My Valentine? 💖</title>
+  <title>Cher, Will You Be My Valentine? 💙</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Cute cursive Google Font -->
+  <!-- Cute cursive font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
@@ -15,12 +15,12 @@
       margin: 0;
       height: 100vh;
       font-family: 'Dancing Script', cursive;
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      transition: background 0.3s ease;
+      transition: background 0.4s ease;
     }
 
     .card {
@@ -35,7 +35,7 @@
 
     h1 {
       font-size: 2.2rem;
-      color: #ff4d6d;
+      color: #3b82f6;
       margin-bottom: 1rem;
       font-weight: 700;
     }
@@ -57,7 +57,7 @@
     button {
       font-family: 'Dancing Script', cursive;
       font-size: 1.15rem;
-      padding: 12px 28px;
+      padding: 12px 30px;
       border: none;
       border-radius: 999px;
       cursor: pointer;
@@ -65,7 +65,7 @@
     }
 
     .yes {
-      background: #ff4d6d;
+      background: #60a5fa;
       color: white;
     }
 
@@ -74,7 +74,7 @@
     }
 
     .no {
-      background: #ddd;
+      background: #e5e7eb;
       color: #333;
     }
 
@@ -83,103 +83,113 @@
     }
 
     .back {
-      background: #999;
+      background: #93c5fd;
       color: white;
       margin-top: 16px;
     }
 
     .back:hover {
-      background: #777;
+      background: #60a5fa;
     }
 
     .sad {
-      background: linear-gradient(135deg, #cfcfcf, #9e9e9e);
+      background: linear-gradient(135deg, #c7d2fe, #a5b4fc);
     }
 
-    .hearts {
+    .emojis {
       position: fixed;
       inset: 0;
       pointer-events: none;
       overflow: hidden;
     }
 
-    .heart {
+    .emoji {
       position: absolute;
       bottom: -20px;
-      font-size: 24px;
+      font-size: 26px;
       animation: floatUp 4s linear infinite;
       opacity: 0.9;
     }
 
     @keyframes floatUp {
       0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-110vh) scale(1.6); opacity: 0; }
+      100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
   <div class="card" id="card"></div>
-  <div class="hearts" id="hearts"></div>
+  <div class="emojis" id="emojis"></div>
 
   <script>
     const card = document.getElementById("card");
-    const hearts = document.getElementById("hearts");
+    const emojis = document.getElementById("emojis");
+    let emojiInterval = null;
+
+    function clearEmojis() {
+      emojis.innerHTML = "";
+      if (emojiInterval) clearInterval(emojiInterval);
+    }
+
+    function floatEmojis(symbols) {
+      clearEmojis();
+      emojiInterval = setInterval(() => {
+        const emoji = document.createElement("div");
+        emoji.className = "emoji";
+        emoji.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        emoji.style.left = Math.random() * 100 + "vw";
+        emoji.style.animationDuration = 3 + Math.random() * 2 + "s";
+        emojis.appendChild(emoji);
+        setTimeout(() => emoji.remove(), 5000);
+      }, 300);
+    }
 
     function renderStart() {
       document.body.classList.remove("sad");
       card.innerHTML = `
-        <h1>Cher, will you be my Valentine? 💘</h1>
-        <p>This is a very important decision 🥺</p>
+        <h1>Cher, will you be my Valentine? 💙</h1>
+        <p>Please think very carefully 🥺</p>
         <div class="buttons">
           <button class="yes" onclick="firstYes()">Yes 💖</button>
           <button class="no" onclick="clickedNo()">No 😤</button>
         </div>
       `;
+      floatEmojis(["🤔", "💭"]);
     }
 
     function clickedNo() {
       document.body.classList.add("sad");
       card.innerHTML = `
         <h1>I guess you hate me... 😔</h1>
-        <p>I’ll just go listen to sad music now...</p>
+        <p>This hurts more than you know...</p>
         <div class="buttons">
           <button class="back" onclick="renderStart()">Wait… go back 😢</button>
         </div>
       `;
+      floatEmojis(["😭", "💧"]);
     }
 
     function firstYes() {
       card.innerHTML = `
         <h1>Are you sure? 👀</h1>
-        <p>Like… absolutely 100% sure?</p>
+        <p>Like… super duper sure?</p>
         <div class="buttons">
-          <button class="yes" onclick="finalYes()">Yes. I'm sure. 💕</button>
+          <button class="yes" onclick="finalYes()">Yes. I'm sure. 💙</button>
         </div>
       `;
+      floatEmojis(["🤔", "💭"]);
     }
 
     function finalYes() {
       card.innerHTML = `
-        <h1>YAY CHER!!! 💕🥰</h1>
+        <h1>YAY CHER!!! 💙🥰</h1>
         <p>
           You just made me the happiest person alive 💖<br>
           Happy Valentine’s Day 💘
         </p>
       `;
-      launchHearts();
-    }
-
-    function launchHearts() {
-      setInterval(() => {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.textContent = "💖";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = 3 + Math.random() * 2 + "s";
-        hearts.appendChild(heart);
-        setTimeout(() => heart.remove(), 5000);
-      }, 200);
+      floatEmojis(["💖", "💙", "✨"]);
     }
 
     renderStart();
